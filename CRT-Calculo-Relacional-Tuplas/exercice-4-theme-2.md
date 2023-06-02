@@ -1,11 +1,16 @@
 # Exercice 4 CRT
 
+`NOTA`: Las notación usada en este documento no es la que quiere el profesor, pero, los ejercicios implementados,
+están implementados de manera correcta.
+
 Sean las relaciones siguientes: 
-SOCIO( aficionado, videoclub )
+SOCIO( aficionado, videoclub )\
 SIGNIFICADO: El aficionado es socio de videoclub. 
-GUSTA( aficionado, película )
-SIGNIFICADO: Al aficionado le gusta la película. 
-VIDEOTECA( videoclub, película )
+
+GUSTA( aficionado, película )\
+SIGNIFICADO: Al aficionado le gusta la película.
+
+VIDEOTECA( videoclub, película )\
 SIGNIFICADO: El videoclub dispone en su videoteca de la película. 
 
 Escribir las consultas siguientes en cálculo relacional de tuplas:
@@ -23,7 +28,7 @@ Se necesitan las tablas: GUSTA, VIDEOCLUB
 
 b) Aficionados que son socios al menos de un videoclub que dispone de alguna película de
 su gusto.\
-Implementado por copilot:
+Implementado por copilot en CRD:
 ```
   {<aficionado> | ∃videoclub, película (∃aficionado(SOCIO(aficionado, videoclub)) ∧ GUSTA(aficionado, película) 
   ∧ VIDEOTECA(videoclub, película))}
@@ -37,7 +42,7 @@ Se necesitan las tablas: SOCIO, GUSTA, VIDEOTECA
 
 c) Aficionados que son socios solamente de videoclubes que disponen de alguna película de
 su gusto.\
-Implementado por copilot:
+Implementado por copilot en CRD:
 ```
 {<aficionado> | ∀videoclub, película ((SOCIO(aficionado, videoclub) → VIDEOTECA(videoclub, película)) ∧ 
 (GUSTA(aficionado, película) → ∃videoclub, película VIDEOTECA(videoclub, película))))}
@@ -50,7 +55,7 @@ Se necesitan las tablas: SOCIO, GUSTA, VIDEOTECA
 ```
 
 d) Aficionados que sólo son socios de videoclubs que no tienen películas de su gusto.\
-Implementado por copilot:
+Implementado por copilot en CRD:
 ```
 {<aficionado> | ∀videoclub, película ((SOCIO(aficionado, videoclub) → ¬∃videoclub, película (GUSTA(aficionado, película)
  ∧ VIDEOTECA(videoclub, película))))}
@@ -63,7 +68,7 @@ Se necesitan las tablas: SOCIO, GUSTA, VIDEOTECA
 ```
 
 e) Aficionados que son socios de algún videoclub que tiene todas las películas de su gusto.\
-Implementado por copilot:
+Implementado por copilot en CRD:
 ```
 {<aficionado> | ∃videoclub (∃aficionado(SOCIO(aficionado, videoclub)) ∧ (∀película (GUSTA(aficionado, película) 
 → VIDEOTECA(videoclub, película))))}
@@ -77,7 +82,7 @@ Se necesitan las tablas: SOCIO, GUSTA, VIDEOTECA
 
 f) Aficionados que son socios solamente de videoclubs que tienen todas las películas de su
 gusto.\
-Implementado por copilot:
+Implementado por copilot en CRD:
 ```
 {<aficionado> | ∀videoclub (∃aficionado(SOCIO(aficionado, videoclub)) → (∀película (GUSTA(aficionado, película) 
 → VIDEOTECA(videoclub, película))))}
