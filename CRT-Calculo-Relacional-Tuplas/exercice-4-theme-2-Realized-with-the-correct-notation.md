@@ -53,11 +53,26 @@ Solución propuesta por el solucionario:
 ```
 
 d) Aficionados que sólo son socios de videoclubs que no tienen películas de su gusto.\
-Se necesitan las siguientes tablas:
+Se necesitan las siguientes tablas: SOCIO, GUSTA, VIDEOTECA
+```
+Para (dom(s) = SOCIO), (dom(g) = GUSTA), (dom(v) = VIDEOTECA)
+{t | SOCIO(t) ^ ∀s((s.aficionado = t) ^ ∃g ∃v((s.videoclub = v.videoclub) ^ 
+(v.pelicula ¬= g.pelicula) ^ (g.aficionado = t)))}
+```
 
 e) Aficionados que son socios de algún videoclub que tiene todas las películas de su gusto.\
-Se necesitan las siguientes tablas:
+Se necesitan las siguientes tablas: SOCIO, GUSTA, VIDEOTECA
+```
+Para (dom(s) = SOCIO), (dom(g) = GUSTA), (dom(v) = VIDEOTECA)
+{t | SOCIO(t) ^ ∀s((s.aficionado = t) ^ ∃v ∀g((s.videoclub = v.videoclub) ^ (v.pelicula = g.pelicula)
+^ (g.aficionado = t)))}
+```
 
 f) Aficionados que son socios solamente de videoclubs que tienen todas las películas de su
 gusto.\
-Se necesitan las siguientes tablas:
+Se necesitan las siguientes tablas: SOCIO, GUSTA, VIDEOTECA
+```
+Para (dom(s) = SOCIO), (dom(g) = GUSTA), (dom(v) = VIDEOTECA)
+{t | SOCIO(t) ^ ∀s((s.aficionado = t) ^ ∀v ∀g((v.videoclub = s.videoclub) ^ (v.pelicula = g.pelicula)
+^ (g.aficionado = t)))}
+```
