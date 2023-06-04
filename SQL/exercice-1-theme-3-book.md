@@ -85,10 +85,41 @@ FROM DISTRIBUCION
 WHERE cantidad>10 OR cantidad<5;
 ```
 
-7) Obtener todas las parejas de cifm de marcas y dni de clientes que sean de la misma ciudad.
+7) Obtener todas las parejas de cifm de marcas y dni de clientes que sean de la misma ciudad.\
 Se necesitan las tablas: MARCAS, CLIENTES
 ```sql
 SELECT cifm, dni
 FROM MARCAS, CLIENTES
 WHERE marcas.ciudad = clientes.ciudad;
+```
+
+8) Obtener todas las parejas de dni de clientes y cifm de marcas que NO sean de la misma ciudad.\
+Se necesitan las tablas: MARCAS, CLIENTES
+```sql
+SELECT dni, cifm
+FROM CLIENTES, MARCAS
+WHERE NOT(CLIENTES.ciudad = MARCAS.ciudad);
+```
+
+9) Obtener los codcoche suministrados por algún concesionario de Barcelona.\
+Se necesitan las tablas: COCHES, CONSECIONARIOS
+```sql
+SELECT codcoche
+FROM COCHE, CONCESIONARIOS
+WHERE (CONCESIONARIOS.ciudad = 'Barcelona');
+```
+
+Consulta corregida, ya que se me pasó la tabla distribución:
+```sql
+SELECT codcoche
+FROM DISTRIBUCION, CONCESIONARIOS
+WHERE DISTRIBUCION.cifc = CONCESIONARIOS.cifc AND CONCESIONARIOS.ciudad = 'Barcelona';
+```
+
+10) Obtener el codcoche de aquellos coches vendidos a clientes de 'Madrid'.\
+Se necesitan las tablas: CLIENTES, VENTAS
+```sql
+SELECT codcoche
+FROM CLIENTES, VENTAS
+WHERE CLIENTES.dni = VENTAS.dni AND CLIENTES.ciudad = 'Madrid';
 ```

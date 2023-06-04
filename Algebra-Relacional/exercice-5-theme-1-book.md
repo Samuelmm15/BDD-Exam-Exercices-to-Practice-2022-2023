@@ -22,25 +22,25 @@ Realizar la implementación de cada una de las consultas expresadas a continuaci
 
 1) Hallar los identificadores de todas las fábricas.\
 Se necesitan las tablas: FAB
-```
+```sql
 p(NF)(FAB)
 ```
 
 2) Hallar los nombres de las fábricas situadas en Madrid.\
 Se necesitan las tablas: FAB
-```
+```sql
 p(NOMF)(s((CIUDADF = 'Madrid'))(FAB))
 ```
 
 3) Artículos tales que ningún otro tiene talla más pequeña.\
 Se necesitan las tablas: ART
-```
+```sql
 ART1 = ART2 = ART
 p(NA)(s((ART1.talla < ART2.talla))(ART1 * ART2))
 ```
 
 La solución real ante la consulta anterior es:
-```
+```sql
 ART1 = ART2 = ART
 p(NA)(ART) - p(ART1.NA)(s(ART1.TALLA > ART2.TALLA)(ART1 * ART2))
 ```
@@ -48,7 +48,7 @@ p(NA)(ART) - p(ART1.NA)(s(ART1.TALLA > ART2.TALLA)(ART1 * ART2))
 4) Proveedores que suministran a la fábrica F1.\
 Se necesitan las tablas: PED\
 Cabe destacar que suponemos que F1 se trata del identificador de la fábrica y no del nombre de esta.
-```
+```sql
 p(NP)(s((NF = 'F1'))(PED))
 ```
 
@@ -56,18 +56,18 @@ p(NP)(s((NF = 'F1'))(PED))
 Se necesitan las tablas: PED\
 Cabe destacar que suponemos que F1 y A1 hacen referencia a los identificadores de los elementos y no a los propios
 nombres de estos.
-```
+```sql
 p(NP)(s((NF = 'F1') ^ (NA = 'A1'))(PED))
 ```
 
 6) Nombres de las fábricas a las que suministra el proveedor F1.\
 Se necesitan las tablas: PED, FAB
-```
+```sql
 p(NOMF)(s((NP = 'F1') ^ (PED.NF = FAB.NF))(FAB * PED))
 ```
 
 Corregido de manera correcta:
-```
+```sql
 p(NOMF)(s((NP = 'F1'))(FAB * PED))
 ```
 
@@ -77,24 +77,24 @@ tanto, es mejor no ponerlo, porque si no está mal, eso solo se hace en cálculo
 
 7) Colores de los artículos suministrados por el proveedor P1.\
 Se necesitan las tablas: PED, ART
-```
+```sql
 p(COLOR)(s((PED.NP = 'P1'))(ART * PED))
 ```
 
 8) Qué proveedores suministran a las fábricas F1 y F2.\
 Se necesitan las tablas: PED, PRO
-```
+```sql
 p(NP)(s((PRO.NP = PED.NP) ^ (PED.NF = 'F1') ^ (PED.NF = 'F2'))(PRO * PED))
 ```
 
 Corregido de manera correcta por el solucionario:
-```
+```sql
 (p(NP)(s(NF = 'F1')(PED)) ⋂ p(NP)(s(NF = 'F2')(PED)))
 ```
 
 9) Proveedores que suministran artículos azules a la fábrica F1.\
 Se necesitan las tablas: PED, ART
-```
+```sql
 p(NP)(s((NF = 'F1') ^ (COLOR = 'Azul'))(PED * ART))
 ```
 
@@ -106,6 +106,99 @@ anterior y dichas manías de usarlo continuamente de esta manera.
 
 10) Artículos suministrados a las Fábricas de Madrid.\
 Se necesitan las tablas: PED, FAB
-```
+```sql
 p(NA)(s((CIUDADF = 'Madrid'))(PED * FAB))
-``
+```
+
+11) Proveedores que suministran algún artículo azul a las fábricas de Madrid o Lisboa.\
+Se necesitan las tablas: ART, FAB, PED
+```sql
+p(NP)(s((COLOR = 'azul') ^ (CIUDADF = 'Madrid') V (CIUDADF = 'Lisboa'))(ART * FAB * PED))
+```
+
+12) Artículos suministrados por proveedores en cuya ciudad hay alguna fábrica.\
+Se necesitan las tablas: PED, PRO, FAB
+```sql
+p(NA)(s((CIUDADP = CIUDADF))(PRO * PED * FAB))
+```
+
+Sentencia corregida por el solucionario del libro:
+```sql
+p(NA)(PED * p(NP)(s(CIUDADF = CIUDADP)(PRO * FAB)))
+```
+
+13) Artículos suministrados a las fábricas de Madrid por proveedores de Madrid.\
+Se necesitan las tablas: PED, PRO, FAB
+```sql
+p(NP)(s((CIUDADF = 'MADRID') ^ (CIUDADP = 'MADRID'))(PRO * PED * FAB))
+```
+
+14) Fábricas abastecidas por al menos un proveedor de distinta ciudad.\
+Se necesitan las tablas: PED, PRO, FAB
+```sql
+p(NF)(s((CIUDADF ¬= CIUDADP))(PRO * PED * FAB))
+```
+
+`NOTA:` siempre que se quiera hacer uso del símbolo de distinto, tanto en álgebra relacional como en cálculo
+relacional no se debe de hacer uso de !=, sino, se debe de hacer uso de `¬=`, ya que se trata del uso 
+de operadores lógicos, es por ello que se emplea este tipo de símbolo de distinto.
+
+15) Fábricas que NO son abastecidas de artículos azules por proveedores de Madrid.\
+Se necesitan las tablas: PED, FAB, ART, PRO
+```sql
+p(NF)(s((COLOR != 'azul') ^ (CIUDADP = 'Madrid'))(PRO * PED * FAB * ART))
+```
+
+Esto anterior se puede hacer de esa manera anterior, pero, la manera más óptima de hacer esto esta corregida
+por el solucionario del libro:
+```sql
+p(NF)(FAB) - P(NF)(s((CIUDADP = 'Madrid') ^ (COLOR = 'azul'))(PED * PRO * ART))
+```
+
+16) Proveedores que suministran al menos un artículo suministrado por al menos otro proveedor que suministra al 
+menos un artículo azul.\
+Se necesitan las tablas: PRO, PED, ART
+```sql
+V1 = p(NP)(s((COLOR = 'azul'))(PED * ART)) -- Estos son los artículos de color azul suministrados por al menos un 
+-- proveedor
+V2 = p(NA)(PED * V1) -- Artículos suministrados por los proveedores de artículos azules
+p(NP)(PED * V2)
+-- Hay que tener en cuenta que para el caso anterior, no se tiene en cuenta el hecho de que puede ser el propio
+-- proveedor el que suministre los artículos azules.
+```
+
+17) Fábricas que usan al menos un artículo suministrado por el proveedor P1 a ella misma o a otra.\
+Se necesitan las tablas: PED
+```sql
+p(NF)(s((NP = 'P1'))(PED))
+```
+
+Setencia corregida mediante el solucionario:
+```sql
+p(NF)(PED * p(NA)(s(NP = 'P1')(PED)))
+```
+
+18) Parejas de ciudades tales que un proveedor de la primera abastece a una fábrica de la
+segunda.\
+Se necesitan las tablas: PRO, PED, FAB
+```sql
+p(CIUDADP, CIUDADF)(PED * PRO * FAB)
+```
+
+19) Obtener las tripletas de valores de <CIUDAD, NA, CIUDAD> tales que un proveedor de la primera ciudad
+abastece un artículo NA a una fábrica de la segunda ciudad.\
+Se necesitan las tablas: PRO, PED, FAB
+```sql
+p(CIUDADP, NA, CIUDADF)(PED * PRO * FAB)
+```
+
+21) Proveedores que suministran un mismo artículo, al menos, a todas las fábricas.\
+Se necesitan las tablas: PED, FAB
+```sql
+p(NP)(PED) ∩ p(NF)(FAB)
+```
+
+Casi está bien, el concepto que tenía era el correcto, pero, corregido es:
+```sql
+p(NP)((p(NP, NA, NF)(PED) / p(NF)(FAB)))
+```
