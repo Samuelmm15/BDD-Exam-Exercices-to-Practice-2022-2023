@@ -25,3 +25,9 @@ Para poder entender esto se tiene:
 -- Para el caso de que se produzca más de una columna, para este caso dos.
 {t2 | (p = t1) ^ (q = t2)}
 ```
+
+## 3. Sentencias que solicitan `TODO` o `TODOS` los elementos en álgebra relacional.
+
+Cuando ocurren situaciones en las que en la consulta se solicita todo, en álgebra relacional considerar siempre
+el uso del conciente, ya que, en muchas de las situaciones, por no decir en todas, se debe de hacer uso del
+operador cociente para poder resolver la consulta e implementarla de manera correcta y óptima.

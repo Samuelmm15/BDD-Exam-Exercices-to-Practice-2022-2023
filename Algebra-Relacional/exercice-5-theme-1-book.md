@@ -202,3 +202,52 @@ Casi está bien, el concepto que tenía era el correcto, pero, corregido es:
 ```sql
 p(NP)((p(NP, NA, NF)(PED) / p(NF)(FAB)))
 ```
+
+22) Fábricas que tienen como único proveedor a P1.\
+Se necesitan las tablas: PED
+```sql
+p(NF)(s((NP = 'P1'))(PED)) - p(NF)(s((NP ¬= P1))(PED))
+```
+
+23) Artículos que son suministrados a todas las fábricas de Madrid.\
+Se necesitan las tablas: PED, FAB
+```sql
+(p(NA, NF)(PED)) / (p(NF)(s(CIUDAD = 'Madrid')(FAB)))
+```
+
+24) Fábricas que usan al menos, todos los artículos suministrados por el proveedor P1.\
+Se necesitan las tablas: PED, FAB
+```sql
+(p(NF, NA)(PED)) / p(NA)(s((NP = 'P1'))(PED))
+```
+
+Por ejemplo, esta consulta vi el todos antes de nada, y considere el operador cociente y es necesario para dicho
+caso, por tanto, es correcto el empleo del operador cociente cuando se introduzca el todos en la consulta.
+
+25) Fábricas que usan sólo artículos que pueden ser suministrados por el proveedor P1.
+Se necesitan las tablas: FAB, PED
+```sql
+p(NF)(FAB) - (p(NF)(PED * ((p(NA)(ART) - p(NA)(s(NP = 'P1')(PED))))))
+```
+
+26) Fábricas abastecidas por el proveedor P1 con todos los artículos que este suministra.
+Se necesitan las tablas: PED
+```sql
+(p(NF, NA, NP)(PED)) / (p(NA, NP)(s(NP = 'P1')(PED)))
+```
+
+27) Fábricas que obtienen del proveedor P1, total o parcialmente, todos los artículos que usan.
+Se necesitan las tablas: PED
+```sql
+(p(NF, NA, NP)(PED)) / (p(NA, NP)(s(NP = 'P1')(PED)))
+```
+
+Corregido por el solucionario:
+```sql
+p(NF)(FAB) - (p(NF)(p(NA, NF)(PED) - (p(NA, NF)(s(NP = 'P1')(PED)))))
+```
+
+28) Fábricas abastecidas por todos los proveedores que suministran algún artículo de color azul.
+```sql
+(p(NF, NP)(PED)) / p(NP)(s(COLOR = AZUL)(PED * ART))
+```
