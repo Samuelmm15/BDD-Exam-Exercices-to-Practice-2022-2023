@@ -55,3 +55,20 @@ WHERE dni<(SELECT dni
            FROM CLIENTES
            WHERE nombre='Juan' AND apellidos='Martín');
 ```
+
+## 6. Uso de negación `¬` cuando se hace uso de un para todo `∀` en una consulta CRT.
+
+De manera común, cuando en una consulta CRT se hace uso de un para todo en alguna parte intermedia de la consulta,
+se suele hacer uso de la negación de un dato con la variable libre t, ya que, cuando se implementa el para todo, 
+en ocasiones las tuplas buscadas como resultado no coinciden con algunas de las dadas con el para todo, por tanto,
+es necesario poner dicha negación al principio del para todo, para eliminar y evitarnos que resulte que dichas
+tuplas salgan como resultado de la consulta final. Un ejemplo para poder ver esto y comprenderlo de manera
+correcta es:
+
+```sql
+-- 25) Fábricas que usan sólo artículos que pueden ser suministrados por el proveedor P1.\
+-- Se necesitan las tablas: PED, FAB, ART
+-- Para (dom(pe) = PED), (dom(f) = FAB), (dom(pe1) = PED)
+{t1 | ∃f ((f.NF = t)) ^ ∀pe ((pe.NF ¬= t) v ((pe.NF = t) ^ ∃pe1 ((pe1.NA = pe.NA ^ pe1.NP = 'P1'))))}
+```
+

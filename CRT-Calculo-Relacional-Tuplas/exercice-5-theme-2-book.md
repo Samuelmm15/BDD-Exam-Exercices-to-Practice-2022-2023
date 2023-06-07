@@ -193,3 +193,90 @@ Para (dom(pe) = PED), (dom(f) = FAB), (dom(pr) = PRO)
 {t3 | ∃pe ∃pr ∃f ((pr.CIUDAD = t1) ^ (pe.NA = t2) ^ (f.CIUDAD = t3) ^ (pr.NP = pe.NP) ^ (pe.NF = f.NF)
     ^ (t1 ¬= t3))}
 ```
+
+21) Proveedores que suministran un mismo artículo, al menos, a todas las fábricas.\
+Se necesitan las tablas: FAB, PED, ART
+```sql
+Para (dom(pe) = PED), (dom(f) = FAB), (dom(a) = ART), (dom(pr) = PRO)
+{t1 | ∃pr ((pr.NP = t) ^ ∃a ∀f ∃pe((pe.NP = t) ^ (pe.NA = a.NA) ^ (pe.NF = f.NF)))}
+```
+
+22) Fábricas que tienen como único proveedor a P1.\
+Se necesitan las tablas: FAB, PED
+```sql
+Para (dom(f) = FAB), (dom(pe) = PED)
+{t1 | ∀f ∃pe ((pe.NF = t) ^ (pe.NP = 'P1') ^ (pe.NF = F.NF))}
+```
+
+Solución dada por el solucionario del libro:
+```sql
+{t1 | ∃f ((f.NF = t) ^ ∀pe ((pe.NF  ¬= t) v (pe.NF  = t ^ pe.NP = 'P1')))}
+```
+
+23) Artículos que son suministrados a todas las fábricas de Madrid (excluyendo los que sólo suministran algunas).\
+Se necesitan las tablas: PED, FAB, ART
+```sql
+Para (dom(pe) = PED), (dom(f) = FAB), (dom(a) = ART)
+{t1 | ∃a ((a.NA = t)) ^ ∀f ∃pe ((f.CIUDAD ¬= 'Madrid') v ((pe.NA = t) ^ (pe.NF = f.NF) ^ (f.CIUDAD = 'Madrid')))}
+```
+
+24) Fábricas que usan, al menos, todos los artículos suministrados por el proveedor P1.\
+Se necesitan las tablas: PED, FAB, ART
+```sql
+Para (dom(pe) = PED), (dom(f) = FAB), (dom(a) = ART)
+{t1 | ∃f ((f.NF = t)) ^ ∀a ∃pe ((pe.NP ¬= 'P1') v ((pe.NA = a.NA) ^ (pe.NP = 'P1') ^ (pe.NF = t)=)}
+```
+
+25) Fábricas que usan sólo artículos que pueden ser suministrados por el proveedor P1.\
+Se necesitan las tablas: PED, FAB, ART
+```sql
+Para (dom(pe) = PED), (dom(f) = FAB), (dom(a) = ART)
+{t1 | ∃f ((f.NF = t)) ^ ∀a ∃pe ((pe.NA = a.NA) ^ (pe.NP = 'P1') ^ (pe.NF = t))}
+```
+
+Solución para la consulta anterior, dada por el solucionario:
+```sql
+Para (dom(pe) = PED), (dom(f) = FAB), (dom(pe1) = PED)
+{t1 | ∃f ((f.NF = t)) ^ ∀pe ((pe.NF ¬= t) v ((pe.NF = t) ^ ∃pe1 ((pe1.NA = pe.NA ^ pe1.NP = 'P1'))))}
+```
+
+`NOTA:` Cabe destacar que se hace uso de la sentencia `pe.NF ¬= t`, ya que, en el caso de que se produzca que
+alguna de las tuplas no conincide, pues se salta dicha tupla, por tanto, primero en muchas ocasiones se debe de poner
+esto sobre todo cuando se hace uso del para todo `∀`, ya que, se tiene que tener en cuenta cuando no coincide
+con la tupla buscada y en el caso de que se encuentre o coincide con la tupla buscada, se produce la setencia que
+se solicita en el enunciado de la consulta.
+
+26) Fábricas abastecidas por el proveedor P1 con todos los atículos que éste suministra.\
+Se necesitan las tablas: PED, FAB
+```sql
+Para (dom(pe) = PED), (dom(pe1) = PED), (dom(f) = FAB)
+{t1 | ∃f ((f.NF = t)) ^ ∀pe ((pe.NF ¬= t) v ((pe.NF = t) ^ ∀pe1((pe1.NF ¬= pe.NF) v (pe1.NF = pe.NF) ^ 
+    (pe1.NA = pe.NA) ^ (pe1.NP = 'P1'))))}
+```
+
+Solución dada por el solucionario del libro:
+```sql
+Para (dom(pe) = PED), (dom(pe1) = PED)
+{t1 | ∀pe ∃p1 ((pe.NP ¬= 'P1') v ((pe.NP = 'P1') ^ (pe.NA = pe1.NA) ^ (pe1.NP = 'P1') ^ (pe1.NF = t)))}
+```
+
+27) Fábricas que obtienen del proveedor P1, total o parcialmente, todos los artículos que usan.\
+Se necesitan las tablas: PED, FAB
+```sql
+Para (dom(f) = FAB), (dom(pe) = PED), (dom(pe1) = PED)
+{t1 | ∃f ((f.NF = t)) ^ ∀pe ∃pe1 ((pe.NF ¬= t) v ((pe.NF = t) ^ (pe1.NF = t) ^ (pe.NA = pe1.NA) ^ (pe1.NP = 'P1')))}
+```
+
+28) Fábricas abastecidas por todos los proveedores que suministran algún artículo de color azul.\
+Se necesitan las tablas: ART, PED, PRO, FAB
+```sql
+Para (dom(a) = ART), (dom(pe) = PED), (dom(pr) = PRO), (dom(f) = FAB)
+{t1 | ∃f ((f.NF = t)) ^ ∀pr ∃a ∃pe ((pr.NP ¬= pe.NP) v ((pr.NP = pe.NP) ^ (a.NA = pe.Na) ^ (a.COLOR = 'azul') 
+    ^ (pe.NF = t)))}
+```
+
+Solución dada por el solucionario del libro:
+```sql
+{t1 | ∃f ((f.NF = t)) ^ ∀pe ((¬∃pe1 ∃a((pe1.NP = pe.NP) ^ (pe.NA = pe.NA) ^ (a.COLOR = 'Azul'))) 
+    v (∃pe1 ∃a((pe1.NP = pe.NP) ^ (pe1.NA = pe.NA) ^ (a.COLOR = 'Azul') ^ (pe1.NF = t))))}
+```
