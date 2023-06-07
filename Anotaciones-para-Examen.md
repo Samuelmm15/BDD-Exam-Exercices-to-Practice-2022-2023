@@ -31,3 +31,27 @@ Para poder entender esto se tiene:
 Cuando ocurren situaciones en las que en la consulta se solicita todo, en álgebra relacional considerar siempre
 el uso del conciente, ya que, en muchas de las situaciones, por no decir en todas, se debe de hacer uso del
 operador cociente para poder resolver la consulta e implementarla de manera correcta y óptima.
+
+## 4. Setencias que solicitan `algún` elemento en SQL.
+
+De manera general cuando se solicita en la sentencia que algún elemento se encuentre dentro de otro, o que en el
+propio enunciado aparezca la palabra algún, se produce que es necesario el uso de subconsultas para la realización
+de la implementación de dicha consulta en SQL.
+
+## 5. Realización de subconsultas en SQL.
+
+En ocasiones, cuando son necesarias la implementación de subconsultas para obtener un valor en concreto o
+un conjunto de valores en concreto, no es necesario siempre en todas las ocasiones hacer uso de otros operadores
+que nos permitan implementar dichas subconsultas, sino que, cuando se quiere obtener un valor en concreto de una
+tabla en concreto por ejemplo, se puede hacer uso de `()` por ejemplo, e implementar dicha subconsulta para poder
+obtener el valor necesario. Es por ello que para poder entender esto, se tiene el siguiente ejemplo para poder
+comprender:
+```sql
+-- 32) Obtener el nombre y el apellido de los clientes cuyo número de dni es menor que el del cliente 'Juan Martín'.\
+-- Se necesitan las tablas: CLIENTES
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE dni<(SELECT dni
+           FROM CLIENTES
+           WHERE nombre='Juan' AND apellidos='Martín');
+```

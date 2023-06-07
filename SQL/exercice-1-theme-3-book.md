@@ -223,3 +223,186 @@ SELECT MAX(dni)
 FROM CLIENTES
 WHERE ciudad='Madrid';
 ```
+
+Para no tener que subir tanto, cada vez que se quieran ver las tablas de la base de datos, se vuelven a introducir
+en esta zona para poder ver todo de manera correcta:\
+Sean las siguientes tablas:
+
+MARCAS(cifm, nombre, ciudad)\
+CLAVE: cifm
+
+COCHES(codcoche, nombre, modelo)\
+CLAVE: codcoche
+
+CONCESIONARIOS(cifc, nombre, ciudad)\
+CLAVE: cifc
+
+CLIENTES(dni, nombre, apellidos, ciudad)\
+CLAVE: dni
+
+DISTRIBUCION(cifc, codcoche, cantidad)\
+CLAVE: cifc, codcoche
+
+VENTAS(cifc, dni, codcoche, color)\
+CLAVE: cifc, dni, codcoche
+
+MARCO(cifm, codcoche)\
+CLAVE: cifm, codcoche
+
+21) Obtener el DNI con numeración más baja de todos los clientes que han comprado un coche 'blanco'.\
+Se necesitan las tablas: VENTAS
+```sql
+SELECT MIN(dni)
+FROM VENTAS
+WHERE color='Blanco';
+```
+
+22) Obtener el cifc de todos los concesionarios cuyo número de coches en sotck no es nulo.\
+Se necesitan las tablas: CONCESIONARIOS, DISTRIBUCION.
+```sql
+SELECT cifc
+FROM CONCESIONARIOS C, DISTRIBUCION D
+WHERE cantidad IS NOT NULL;
+```
+
+No es necesaria la tabla de concesionarios, por tanto, la solución real es:
+```sql
+SELECT DISTINCT cifc
+FROM CONCESIONARIOS
+WHERE cantidad IS NOT NULL;
+```
+
+23) Obtener el cifm y el nombre de las marcas de coches cuya segunda letra del nombre de la ciudad de origen sea
+una 'i'.\
+Se necesitan las tablas: MARCAS
+```sql
+SELECT cifm, nombre
+FROM MARCAS
+WHERE nombre LIKE '_i%';
+```
+
+24) Obtener el dni de los clientes que han comprado algún coche a un concesionario de Madrid.\
+Se necesitan las tablas: VENTAS, CONCESIONARIOS
+```sql
+SELECT DISTINCT dni
+FROM VENTAS
+WHERE cifc IN (SELECT cifc
+               FROM CONCESIONARIOS
+               WHERE ciudad='Madrid');
+```
+
+`NOTA:` Cabe destacar que en SQL cuando se solicita o hace referencia a álgun elemento, es decir, que la consulta
+aparece la palabra algún, se suele implementar dicha consulta haciendo uso de subconsultas.
+
+25) Obtener el color de los coches vendidos por el concesionario 'acar'.\
+Se necesitan las tablas: VENTAS, CONCESIONARIOS
+```sql
+SELECT color
+FROM VENTAS
+WHERE cifc IN (SELECT cifc
+               FROM CONCESIONARIOS
+               WHERE nombre='acar');
+```
+
+26) Obtener el codcoche de los coches vendidos por algún cocesionario de Madrid.\
+Se necesitan las tablas: VENTAS, CONCESIONARIOS
+```sql
+SELECT codcoche
+FROM VENTAS
+WHERE cifc IN (SELECT cifc
+               FROM CONCESIONARIOS
+               WHERE ciudad='Madrid');
+```
+
+27) Obtener el nombre y el modelo de los coches vendidos por algún concesionario de Barcelona.\
+Se necesitan las tablas: VENTAS, CONCESIONARIOS, COCHES
+```sql
+SELECT nombre, modelo
+FROM COCHES
+WHERE codcoche IN (SELECT codcoche
+                   FROM VENTAS
+                   WHERE cifc IN (SELECT cifc
+                                  FROM CONCESIONARIOS
+                                  WHERE ciudad='Barcelona'));
+```
+
+28) Obtener todos los nombres de los clientes que hayan adquirido algún coche del cocesionario 'dcar'.\
+Se necesitan las tablas: VENTAS, CONCESIONARIOS, CLIENTES
+```sql
+SELECT nombre
+FROM CLIENTES
+WHERE dni IN (SELECT dni
+              FROM VENTAS
+              WHERE cifc IN (SELECT cifc
+                             FROM CONCESIONARIOS
+                             WHERE nombre='dcar'));
+```
+
+29) Obtener el nombre y el apellido de los clientes que han adquirido un coche modelo 'gti' de color 'blanco'.\
+Se necesitan las tablas: CLIENTES, VENTAS, COCHES
+```sql
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE dni IN (SELECT dni
+              FROM VENTAS
+              WHERE color='blanco' AND codcoche IN (SELECT codcoche
+                                                    FROM COCHES
+                                                    WHERE modelo='gti'));
+```
+
+30) Obtener el nombre y el apellido de los clientes que han adquirido un automóvil a un cocesionario que posea
+actualmente coches en stock del modelo 'gti'.\
+Se necesitan las tablas: CLIENTES, VENTAS, COCHES, DISTRIBUCION
+```sql
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE dni IN (SELECT dni
+              FROM VENTAS
+              WHERE cifc IN (SELECT cifc
+                                 FROM DISTRIBUCION
+                                 WHERE codcoche IN (SELECT codcoche
+                                                    FROM COCHES
+                                                    WHERE modelo='gti');
+```
+
+31) Obtener el nombre y el apellido de los clientes que han adquirido un automóvil a un cocesionario de 'Madrid' que
+posea actualmente coches en stock del modelo 'gti'.\
+Se necesitan las tablas: CLIENTES, COCHES, VENTAS, DISTRIBUCION
+```sql
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE dni IN (SELECT dni
+              FROM VENTAS
+              WHERE cifc IN (SELECT cifc
+                             FROM CONCESIONARIOS
+                             WHERE ciudad='Madrid'
+                             ) AND cifc IN (SELECT cifc
+                                                 FROM DISTRIBUCION
+                                                 WHERE codcoche IN (SELECT codcoche
+                                                                    FROM COCHES
+                                                                    WHERE modelo='gti')));
+```
+
+32) Obtener el nombre y el apellido de los clientes cuyo número de dni es menor que el del cliente 'Juan Martín'.\
+Se necesitan las tablas: CLIENTES
+```sql
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE dni<(SELECT dni
+           FROM CLIENTES
+           WHERE nombre='Juan' AND apellidos='Martín');
+```
+
+`NOTA:` Tener en cuenta que para poder realizar subconsultas no es necesario el empleo de otros operadores que
+nos permitan hacer subconsultas, si no que en el caso que queramos, se pueden realizar las subconsultas de manera
+directa.
+
+33) Obtener el nombre y el apellido de los clientes cuyo dni es menor que el de los clientes que son de 'Barcelona'.\
+Se necesitan las tablas: CLIENTES
+```sql
+SELECT nombre, apellido
+FROM CLIENTES
+WHERE dni<(SELECT dni
+           FROM CLIENTES
+           WHERE ciudad='Barcelona');
+```
