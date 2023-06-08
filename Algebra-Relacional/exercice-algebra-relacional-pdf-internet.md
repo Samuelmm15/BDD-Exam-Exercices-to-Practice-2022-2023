@@ -60,3 +60,63 @@ Otra alternativa a esto según las soluciones para que solo aparezca la columna 
 ```sql
 p(nombre)((p(nombre, no-cliente, cod-producto)(CLIENTE * VENTA)) / p(cod-producto)(PRODUCTOS))
 ```
+
+6) Identificador de las ventas cuya cantidad supera a la cantidad vendida en la venta número 18.\
+Se necesitan las tablas: VENTA
+```sql
+V1 = p(cantidad)(s(id-venta = 18)(VENTA))
+p(id-venta)(s(cantidad > V1.cantidad)(VENTA * V1))
+```
+
+7) Productos que no se han comprado nunca en Palencia.\
+Se necesitan las tablas: VENTAS, CLIENTES
+```sql
+p(cod-producto)(PRODUCTO) - p(cod-producto)(s(ciudad = 'Palencia')(VENTAS * CLIENTES))
+```
+
+8) Productos que se han vendido tanto en Palencia como en Valladolid.\
+Se necesitan las tablas: VENTAS, CLIENTES
+```sql
+p(cod-producto)(s(ciudad = 'Palencia')(VENTAS * CLIENTES)) ⋂ 
+    p(cod-producto)(s(ciudad = 'Valladolid')(VENTAS * CLIENTES))
+```
+
+9) Poblaciones a las que hemos vendido TODOS nuestros productos.\
+Se necesitan las tablas: VENTAS, CLIENTES, PRODUCTOS
+```sql
+p(ciudad)(p(no-cliente, ciudad)(p(no-cliente, cod-producto)(VENTAS) / p(cod-producto)(PRODUCTO)))
+```
+
+También se puede implementar esto anterior de manera:
+```sql
+p(ciudad)(p(ciudad, cod-producto)(CLIENTES * VENTAS) / p(cod-producto)(PRODUCTO))
+```
+
+Añadimos nuevas tablas a nuestra base de datos, quedando esta de la siguiente manera:
+
+CLIENTES(No Cliente, Nombre, Dirección, Teléfono, Población)\
+Clave: numero-cliente\
+Significado: Tabla que almacena todos los clientes de la empresa.
+
+PRODUCTO(Cod Producto, Descripción, Precio)\
+Clave: cod-producto\
+Significado: Tabla que almacena todos los productos que ofrece la empresa.
+
+FACTURA(No Factura, Fecha, Pagada, No Cliente)\
+Clave: no-factura
+
+VENTA(Cod Producto, No Factura, Cantidad, Id Venta)\
+Clave: id-venta\
+Significado: Tabla que almacena la venta de productos hacia los determinados clientes de la empresa.
+
+10) Obtener el nombre de los clientes que tienen alguna factura sin pagar.\
+Se necesitan las tablas: CLIENTES, FACTURA
+```sql
+p(nombre)(s(pagada = 0)(CLIENTES * FACTURA))
+```
+
+11) Clientes que han pagado todas sus facturas.\
+Se necesitan las tablas: CLIENTES, FACTURA
+```sql
+(p(no-cliente)(CLIENTES)) / p(no-cliente)(s(pagada = 1)(FACTURAS)) 
+```
