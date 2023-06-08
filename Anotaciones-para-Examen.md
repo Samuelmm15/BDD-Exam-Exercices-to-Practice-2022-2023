@@ -72,3 +72,37 @@ correcta es:
 {t1 | ∃f ((f.NF = t)) ^ ∀pe ((pe.NF ¬= t) v ((pe.NF = t) ^ ∃pe1 ((pe1.NA = pe.NA ^ pe1.NP = 'P1'))))}
 ```
 
+## 7. Uso del operador `ALL` de SQL.
+
+Cuando en una consulta se hace referencia a `todos`, se debe de hacer uso del operador `ALL` delante de una subconsulta
+ya que, tiene en cuenta todas las tuplas que resultan de dicha subconsulta, por tanto, es muy útil para ello.
+
+## 8. Uso del operador `ANY` de SQL.
+
+Cuando en una consulta se hace referencia a `alguno o algún` elemento, se debe de hacer uso del operador `ANY` delante
+de la subconsulta que tiene como resultado las tuplas que serán comprobadas mediante el operador ANY.
+
+## 9. Uso de los paréntesis en SQL.
+
+Hay que tener cuidado con el uso de paréntesis en SQL, ya que, si en ocasiones que son necesarias, no se ponen de
+manera correcta, puede resultar que la consulta no se realice de manera correcta o no funcione como es debido y
+nos dé un error. Un ejemplo para poder entender el correcto uso de los paréntesis es:
+
+```sql
+-- Obtener el nombre y el apellido de los clientes cuyo nombre empieza por a y cuyo dni es mayor que el de alguno de
+-- los clientres que son de Madrid o menor que el de todos los de Valencia.\
+-- Se necesitan las tablas: CLIENTES
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE nombre LIKE 'a%' AND (dni > ANY (SELECT dni
+                                       FROM CLIENTES
+                                       WHERE ciudad='Madrid') OR dni < ALL (SELECT dni
+                                                                            FROM CLIENTES
+                                                                            WHERE ciudad='Valencia'));
+```
+
+## 10. Uso del operador de conjunto `MAX` para cadenas de caracteres.
+
+Si deseamos hacer uso del operador MAX para cadenas de caracteres, se puede hacer uso, pero, esto nos devolverá
+el último elemento de una lista ordenada alfabética, por tanto, si existe algún elemento con una Z al comienzo de esta,
+nos devolverá dicho elemento.

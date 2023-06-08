@@ -406,3 +406,167 @@ WHERE dni<(SELECT dni
            FROM CLIENTES
            WHERE ciudad='Barcelona');
 ```
+
+34) Obtener el nombre y el apellido de los clientes cuyo nombre empieza por 'a' y cuyo número del dni
+es mayor que el de todos los clientes que son de Madrid.\
+Se necesitan las tablas: CLIENTES
+```sql
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE nombre LIKE 'a%' AND dni > ALL (SELECT dni
+                                  FROM CLIENTES
+                                  WHERE ciudad='Madrid');
+```
+
+`NOTA:` En sql cuando se necesita o cuando la consulta solicitada necesita o hace referencia a `todos`, se hace uso
+del operador ALL del SQL.
+
+35) Obtener el nombre y el apellido de los clientes cuyo nombre empieza por a y cuyo número de dni es mayor que el de
+alguno de los clientes que son de Madrid.\
+Se necesitan las tablas: CLIENTES
+```sql
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE nombre LIKE 'a%' AND dni > ANY (SELECT dni
+                                      FROM CLIENTES
+                                      WHERE ciudad='Madrid');
+```
+
+`NOTA:` En SQL cuando se refiere en el enunciado de la consulta como alguno, se debe de hacer uso del operador `ANY`
+delante de la subconsulta.
+
+36) Obtener el nombre y el apellido de los clientes cuyo nombre empieza por a y cuyo dni es mayor que el de alguno de
+los clientres que son de Madrid o menor que el de todos los de Valencia.\
+Se necesitan las tablas: CLIENTES
+```sql
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE nombre LIKE 'a%' AND (dni > ANY (SELECT dni
+                                      FROM CLIENTES
+                                      WHERE ciudad='Madrid') OR dni < ALL (SELECT dni
+                                                                           FROM CLIENTES
+                                                                           WHERE ciudad='Valencia'));
+```
+
+`NOTA:` En SQL hay que tener cuidado con los paréntesis, ya que si no se ponen de manera correcta, se puede
+producir que la consulta no se realice ni se implemente de manera correcta.
+
+37) Obtener el nombre y el apellido de los clientes que han comprado como mínimo un coche blanco y un coche rojo.\
+Se necesitan las tablas: CLIENTES, VENTA
+```sql
+SELECT nombre, apellidos
+FROM CLIENTES
+WHERE dni IN (SELECT dni
+              FROM VENTAS
+              WHERE color='blanco') AND dni IN (SELECT dni
+                                                FROM VENTAS
+                                                WHERE color='rojo');
+```
+
+`NOTA:` Hay que tener en cuenta que debido a que no se puede tener color= a los distintos colores dentro de la 
+misma consulta, ya que se generaría un error, debido a que no se pueden tener dos colores distintos dentro de la
+misma tupla, por tanto, se realizan dos subconsultas en las que en las dos se realiza la búsqueda de los dos
+colores distitnos para el mismo dni.
+
+38) Obtener el dni de los clientes cuya ciudad sea la última de la lista alfabética de las ciudades donde hay 
+concesionarios.\
+Se necesitan las tablas: CONCESIONARIOS, CLIENTES
+```sql
+SELECT dni
+FROM CLIENTES
+WHERE ciudad = (SELECT MAX(ciudad)
+                FROM CONCESIONARIOS);
+```
+
+Para no tener que subir tanto, cada vez que se quieran ver las tablas de la base de datos, se vuelven a introducir
+en esta zona para poder ver todo de manera correcta:\
+Sean las siguientes tablas:
+
+MARCAS(cifm, nombre, ciudad)\
+CLAVE: cifm
+
+COCHES(codcoche, nombre, modelo)\
+CLAVE: codcoche
+
+CONCESIONARIOS(cifc, nombre, ciudad)\
+CLAVE: cifc
+
+CLIENTES(dni, nombre, apellidos, ciudad)\
+CLAVE: dni
+
+DISTRIBUCION(cifc, codcoche, cantidad)\
+CLAVE: cifc, codcoche
+
+VENTAS(cifc, dni, codcoche, color)\
+CLAVE: cifc, dni, codcoche
+
+MARCO(cifm, codcoche)\
+CLAVE: cifm, codcoche
+
+39) Obtener la media de los automóviles que cada concesionario tiene actualemente en stock.\
+Se necesitan las tablas: DISTRIBUCION
+```sql
+SELECT cifc, AVG(cantidad)
+FROM DISTRIBUCION
+GROUP BY cifc;
+```
+
+`NOTA:` Haciendo uso del `GROUP BY` se nos permite poder obtener la media de cada uno de los distitnos
+concesionarios, ya que al agruparlos teniendo en cuenta sus correspondientes claves primarias, se produce que,
+se seleccionan los distintos concesionarios que existen en dicha tabla.
+
+40) Obtener el cifc del concesionario que no sea de Madrid cuya media de vehículos en stock sea la más alta
+de todas las medias.\
+Se necesitan las tablas: CONCESIONARIOS, DISTRIBUCION
+```sql
+SELECT cifc
+FROM DISTRIBUCION
+WHERE cifc IN (SELECT cifc
+               FROM CONCESIONARIOS
+               WHERE ciudad!='Madrid') AND AVG(cantidad) > ALL (SELECT AVG(cantidad)
+                                                                FROM DISTRIBUCION);
+```
+
+Consulta anterior corregida mediante el solucionario del libro:
+```sql
+SELECT cifc
+FROM CONCESIONARIO
+WHERE ciudad!='Madrid' AND cifc IN (SELECT cifc
+                                    FROM DISTRIBUCION
+                                    GROUP BY cifc
+                                    HAVING AVG(cantidad) >= (SELECT AVG(cantidad)
+                                                            FROM DISTRIBUCION
+                                                            GROUP BY cifc));
+```
+
+41) Obtener el codcoche de los coches vendidas por algún concesionario de 'Madrid', pero, usando el operador
+`EXISTS` en el resultado.\
+Se necesitan las tablas: VENTAS, CONCESIONARIO
+```sql
+SELECT codcoche
+FROM VENTAS
+WHERE EXISTS(SELECT *
+             FROM CONCESIONARIO
+             WHERE ciudad='Madrid' AND CONCESIONARIO.cifc = VENTAS.cifc);
+```
+
+42) Utilizando EXISTS, obtener el dni de los clientes que hayan adquirido por lo menos alguno de los coches que
+han sido vendidos por el concesionario cuyo cifc es 0001.\
+Se necesitan las tablas: VENTAS
+```sql
+SELECT DISTINCT dni
+FROM VENTAS
+WHERE EXISTS(SELECT *
+             FROM VENTAS V
+             WHERE cifc='0001' AND V.codcoche = VENTAS.codcoche);
+```
+
+43) Obtener el dni de los clientes que sólo hayan comprado coches al cocesionario 0001.\
+Se necesitan las tablas: VENTAS
+```sql
+SELECT dni
+FROM VENTAS V1
+WHERE NOT EXISTS(SELECT *
+                 FROM VENTAS V2
+                 WHERE cifc!=0001 AND V1.dni = V2.dni);
+```
