@@ -106,3 +106,36 @@ WHERE nombre LIKE 'a%' AND (dni > ANY (SELECT dni
 Si deseamos hacer uso del operador MAX para cadenas de caracteres, se puede hacer uso, pero, esto nos devolverá
 el último elemento de una lista ordenada alfabética, por tanto, si existe algún elemento con una Z al comienzo de esta,
 nos devolverá dicho elemento.
+
+## 11. Uso del operador `EXISTS` en SQL.
+
+Cuando en el enunciado de una consulta nos solicitan o en alguna parte de la consulta se especifica que `ningún`
+elemento se produzca o que ningún elemento aparezca o elementos similares, es necesario el empleo del operador
+`NOT EXISTS`, ya que, de esta manera se pone la sentencia en la que se quiere comproabar que si existe dicha
+solución y dicho operador nos obtiene aquellas tuplas que no cumplen con ello. Un ejemplo para poder entender esto
+anterior es:
+
+```sql
+-- Obtener los nombres de los clientes que no han comprado ningún coche rojo a ningún concesionario de Madrid.
+SELECT nombre
+FROM CLIENTES C
+WHERE NOT EXISTS(SELECT *
+                 FROM VENTAS V
+                 WHERE V.dni=C.dni AND color='rojo' AND cifc IN (SELECT cifc
+                                                                 FROM CONCESIONARIOS CO
+                                                                 WHERE ciudad='Madrid'));
+```
+
+El operador `EXISTS` también puede ser usado en aquellas consultas en las que se especifica o se hace uso de la 
+palabra `solo se produzca una x situación`. Por ejemplo, para poder entender esto anterior:
+
+```sql
+-- Obtener el nombre de los clientes que sólo han comprado en el concesionario de cifc 0001.
+SELECT nombre
+FROM CLIENTES
+WHERE dni IN (SELECT dni
+              FROM VENTAS V1
+              WHERE NOT EXISTS(SELECT *
+                               FROM VENTAS V2
+                               WHERE V1.dni=V2.dni AND V2.cifc!='0001'));
+```

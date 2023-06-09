@@ -93,3 +93,83 @@ Se necesita la tabla: VENTA
 Para (dom(v1) = VENTA), (dom(v2) = VENTA)
 {t1 | ∃v1 ∃v2 ((v1.dni = t) ^ (v1.color = 'rojo') ^ (v2.dni = v1.dni) ^ (v2.color ¬= 'blanco')))}
 ```
+
+10) Obtener los valores del atributo dni para los clientes que no han comprado coches de color rojo o han comprado
+al menos un coche de color blanco.\
+Se necesitan las tablas: VENTAS
+```sql
+Para (dom(v1) = VENTAS), (dom(v2) = VENTAS)
+{t1 | ∃v1 ∃v2 ((v1.dni = t) ^ (v1.color='rojo') ^ (v2.color='blanco') ^ (v2.dni=v1.dni))}
+```
+
+11) Obtener el nombre de los clientes que han comprado coches en todos los concesionarios.\
+Se necesitan las tablas: VENTAS, CONCESIONARIOS, CLIENTES.
+```sql
+Para (dom(v) = VENTAS), (dom(co) = CONCESIONARIOS), (dom(cl) = CLIENTES)
+{t1 | ∃v ∃cl ((cl.nombre = t) ^ (cl.dni = v.dni) ^ ∀co ((co.cifc = v.cifc)))}
+```
+
+12) Sean COCHES1 y COCHES2 dos relaciones en las que aparecen las tuplas de la relación COCHES correspondientes al
+modelo gti y las tuplas de la relación COCHES que tienen por nombre ibiza. Indicar una expresión CRT similar a 
+COCHES1 ∩ COCHES2 en álgebra relacional.
+```sql
+Para (dom(c1) = COCHES1), (dom(c2) = COCHES2)
+{t3 | ∃c1 ∃c2 ((c1.codcoche = t1) ^ (c1.nombre = t2) ^ (c1.modelo = t3) ^ (c2.codcoche = c1.codcoche) ^ 
+    (c2.nombre = c1.nombre) ^ (c2.modelo = c1.modelo))}
+```
+
+13) Obtener los nombres de las marcas que tienen modelos 'gtd'.\
+Se necesitan las tablas: MARCAS, MARCO, COCHE
+```sql
+Para (dom(ma) = MARCA), (dom(mo) = MARCO), (dom(c) = COCHE)
+{t1 | ∃ma ∃mo ∃c ((ma.nombre = t) ^ (ma.cifm = mo.cifm) ^ (mo.codcoche = c.codcoche) ^ (c.modelo = 'gtd'))}
+```
+
+14) Obtener los nombres de las marcas de las que se han vendido coches de color rojo.\
+Se necesitan las tablas: MARCAS, MARCO, VENTA
+```sql
+Para (dom(ma) = MARCA), (dom(mo) = MARCO), (dom(v) = VENTA)
+{t1 | ∃ma ∃mo ∃v ((ma.nombre = t) ^ (ma.cifm = mo.cifm) ^ (mo.codcoche = v.codcoche) ^ (v.color = 'rojo'))}
+```
+
+15) Obtener los nombres de los coches que tengan al menos todos los modelos que tiene el coche de nombre 'cordoba'.\
+Se necesitan las tablas: COCHES
+```sql
+Para (dom(c1) = COCHES), (dom(c2) = COCHES)
+{t1 | ∃c1 ((c1.nombre = t) ^ ∀c2 ((c2.nombre = 'cordoba') ^ (c1.modelo = c2.modelo)))}
+```
+
+16) Obtener el nombre de los coches que no tengan modelo 'gtd'.\
+Se necesitan las tablas: COCHES
+```sql
+Para (dom(c) = COCHES)
+{t1 | ∃c ((c.nombre = t) ^ (c.modelo ¬= 'gtd'))}
+```
+
+17) Obtener todas las tuplas de las relación de concesionarios.\
+Se necesitan las tablas: CONCESIONARIOS.
+```sql
+{t | t ∈ CONCESIONARIOS}
+```
+
+18) Obtener todas las tuplas de todos los clientes de Madrid.\
+Se necesitan las tablas: CLIENTES
+```sql
+Para (dom(c) = CLIENTES)
+{t | t ∈ CLIENTES ^ t.ciudad = 'Madrid'}
+```
+
+19) Obtener todas las parejas de atributos cifm de la realción de MARCAS y dni de la relación CLIENTES que sean
+de la misma ciudad.\
+Se necesitan las tablas: MARCAS, CLIENTES
+```sql
+Para (dom(m) = MARCAS), (dom(c) = CLIENTES)
+{t2 | ∃m ∃c ((m.cifm = t1) ^ (c.dni = t2) ^ (m.ciudad = c.ciudad))}
+```
+
+20) Obtener todas las parejas de valores de los atributos cifm de la relación MARCAS y dni de la relación CLIENTES
+que no sean de la misma ciudad.\
+```sql
+Para (dom(m) = MARCAS), (dom(c) = CLIENTES)
+{t2 | ∃m ∃c ((m.cifm = t1) ^(c.dni = t2) ^ (m.ciudad ¬= c.ciudad))}
+```
