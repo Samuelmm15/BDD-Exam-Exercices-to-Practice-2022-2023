@@ -570,3 +570,116 @@ WHERE NOT EXISTS(SELECT *
                  FROM VENTAS V2
                  WHERE cifc!=0001 AND V1.dni = V2.dni);
 ```
+
+44) Obtener los nombres de los clientes que no han comprado ningún coche rojo a ningún concesionario de Madrid.\
+Se necesitan las tablas: CLIENTES, VENTA, CONCESIONARIOS
+```sql
+SELECT nombre
+FROM CLIENTES C
+WHERE NOT EXISTS(SELECT dni
+                 FROM VENTAS V
+                 WHERE V.dni=C.dni AND color='rojo' AND NOT EXISTS(SELECT cifc
+                                                                   FROM CONCESIONARIOS CO
+                                                                   WHERE CO.cifc=V.cifc AND ciudad='Madrid'));
+```
+
+Esta consulta un podo modificada en el solucionario del libro:
+```sql
+SELECT nombre
+FROM CLIENTES C
+WHERE NOT EXISTS(SELECT *
+                 FROM VENTAS V
+                 WHERE V.dni=C.dni AND color='rojo' AND cifc IN (SELECT cifc
+                                                                 FROM CONCESIONARIOS CO
+                                                                 WHERE ciudad='Madrid'));
+```
+
+45) Obtener el nombre de los clientes que sólo han comprado en el concesionario de cifc 0001.\
+Se necesitan las tablas: CLIENTES, VENTAS
+```sql
+SELECT nombre
+FROM CLIENTES
+WHERE dni IN (SELECT dni
+              FROM VENTAS V1
+              WHERE NOT EXISTS(SELECT *
+                               FROM VENTAS V2
+                               WHERE V1.dni=V2.dni AND V2.cifc!='0001'));
+```
+
+46) Obtener el codcoche de aquellos automóviles que han sido comprados por todos los clientes de 'Madrid'.\
+Se necesitan las tablas: VENTAS, CLIENTES
+```sql
+SELECT codcoche
+FROM VENTAS
+WHERE ALL dni IN (SELECT dni
+                  FROM CLIENTES
+                  WHERE ciudad='Madrid');
+```
+
+Esto anterior corregido mediante el solucionario del libro:
+```sql
+SELECT DISTINCT codcoche
+FROM VENTAS V1
+WHERE NOT EXISTS(SELECT *
+                 FROM CLIENTES
+                 WHERE ciudad='Madrid' AND NOT EXISTS(SELECT *
+                                                      FROM VENTAS V2
+                                                      WHERE V2.dni=CLIENTES.dni AND V2.codcoche=V1.codcoche));
+```
+
+47) Obtener el codcoche de aquellos automóviles de color rojo y de modelo gti que han sido comprados por todos 
+los clientes cuyo apellido comienza por g.\
+Se necesitan las tablas: VENTAS, COCHES, CLIENTES
+```sql
+SELECT codcoche
+FROM VENTAS V1
+WHERE color='rojo' AND codcoche IN (SELECT codcoche
+                                    FROM COCHES
+                                    WHERE modelo='gti') AND NOT EXISTS(SELECT *
+                                                                       FROM CLIENTES
+                                                                       WHERE apellido LIKE 'g%' AND NOT EXISTS(SELECT *
+                                                                                                               FROM VENTAS V2
+                                                                                                               WHERE V2.dni=CLIENTE.dni AND V2.codcoche=V1.codcoche));
+```
+
+48) Obtener el dni de los clientes que han adquirido por lo menos los mismo automóviles que el cliente 'Luis García'.\
+Se necesitan las tablas: CLIENTES, VENTAS
+```sql
+SELECT DISTINCT dni
+FROM VENTAS V1
+WHERE NOT EXISTS(SELECT *
+                 FROM CLIENTES
+                 WHERE nombre='Luis' AND apellido='García' AND NOT EXISTS(SELECT *
+                                                                          FROM VENTAS V2
+                                                                          WHERE V2.dni=CLIENTES.dni AND V2.codcoche=V1.codcoche));
+```
+
+Consulta corregida mediante el solucionario del libro:
+```sql
+SELECT DISTINCT dni
+FROM VENTAS V1
+WHERE NOT EXISTS(SELECT codcoche
+                 FROM VENTAS V2
+                 WHERE dni IN (SELECT DNI
+                               FROM CLIENTES
+                               WHERE nombre='Luis' AND apellido='García')) AND NOT EXISTS(SELECT *
+                                                                                          FROM VENTAS V3
+                                                                                          WHERE V3.codcoche=V2.codcoche
+                                                                                          AND V3.dni=V1.dni);
+```
+
+48) Obtener el cifc de los concesionarios que han vendido el mismo coches a todos los clientes.\
+Se necesitan las tablas: VENTAS, CLIENTES
+```sql
+SELECT cifc
+FROM VENTAS V1
+WHERE NOT EXISTS(SELECT codcoche
+                 FROM VENTAS V2
+                 WHERE NOT EXISTS(SELECT dni
+                                  FROM CLIENTES
+                                  WHERE NOT EXISTS(SELECT *
+                                                   FROM VENTAS V3
+                                                   WHERE V3.cifc=V1.cifc
+                                                   AND V3.codcoche=V2.codcoche
+                                                   AND V3.dni=CLIENTES.dni)));
+```
