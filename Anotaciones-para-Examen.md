@@ -139,3 +139,8 @@ WHERE dni IN (SELECT dni
                                FROM VENTAS V2
                                WHERE V1.dni=V2.dni AND V2.cifc!='0001'));
 ```
+
+## 12. Operador `YEAR()` en SQL.
+
+En SQL existe un operador que nos permite ordenador por años fechas que se encuentran en formato estándar dentro
+de las distintas tablas de la base de datos. Por tanto, este operador es útil cuando se hace uso de fechas.
