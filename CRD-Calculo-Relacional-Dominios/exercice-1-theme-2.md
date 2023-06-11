@@ -50,10 +50,34 @@ Se necesitan las tablas: HOMBRES, MSIM
     ∀(nombre-mujer)¬∃(nombre-hombre`)((<nombre-hombre`, nombre-mujer> ϵ MSIM) ^ (nombre-hombre` = nombre-hombre))}
 ```
 
-e) Hallar los hombres y mujeres asociales a quienes no cae nadie simpático.
+e) Hallar los hombres y mujeres asociales a quienes no cae nadie simpático.\
+Significado: A los hombres no les cae bien ninguna mujer y a las mujeres no les cae bien ningún hombre.\
+Se necesitan las tablas: HOMBRE, MUJERE, HSIM, MSIM
+```sql
+{<NH, NM> | ∃(EH, EM)(<NH, EH> ϵ HOMBRE) ^ (<NM, EM> ϵ MUJER) ^ ∀(NM`)¬∃(NH`)((<NH`, NM`> ϵ HSIM) ^ (NH` = NH)) ^ 
+    ∀(NH`)¬∃(NM`)((<NH`, NM`> ϵ MSIM) ^ (NM` = NM)))}
+```
+EH: Edad del hombre
+EM: Edad de la mujer
 
-f) Hallar las mujeres casadas que caen simpáticas a algún hombre.
+f) Hallar las mujeres casadas que caen simpáticas a algún hombre.\
+Se necesitan las tablas: MATRIMONIO, MSIM\
+Significado: Hallar aquellas mujeres que están casadas y que le caen simpáticas a algún hombre independientemente
+de que sea su marido o no.
+```sql
+{< NM > | ∃(NH)((<NH, NM> ϵ MATRIMONIO) ^ ∀(NH)∃(NM`)((<NH, NM`> ϵ MSIM) ^ (NM`= NM`))}
+```
 
-g) Hallar los hombres a quienes sólo caen simpáticas mujeres casadas.
+g) Hallar los hombres a quienes sólo caen simpáticas mujeres casadas.\
+Se necesitan las tablas: MATRIMONIO, MSIM, HOMBRE\
+Significado: Hallar los hombres a los que les cae solo bien mujeres que se encuentran casadas, aunque no sea su esposa.
+```sql
+{< NH > | ∃(NM, edad)((<NH, edad> ϵ HOMBRE) ^ ∀(NM)∃(NH`, NH``)((<NH`, NM> ϵ MSIM) ^ (<NH``, NM> ϵ MATRIMONIO) 
+    ^ (NH` = NH) ^ ((NH`` ¬= NH) v (NH`` = NH))}
+```
 
-h) Hombres a quienes sólo cae simpática su esposa.
+h) Hombres a quienes sólo cae simpática su esposa.\
+Se necesitan las tablas: MATRIMONIO, MSIM
+```sql
+{< NH > |  ∃(NM)((<NH, NM> ϵ MATRIMONIO) ^ ∀(NH`)¬∃(NM`)(<NH`, NM`> ϵ MSIM) ^ (NH` = NH) ^ (NM` ¬= NM)}
+```
