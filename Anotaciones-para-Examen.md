@@ -1,5 +1,7 @@
 # Anotaciones para Examen
 
+`NOTA:` Enlace de otros apuntes que pueden ser útiles: [NOTION-NOTES](https://fantasy-dance-bb2.notion.site/Ejercicios-de-repaso-EXAMEN-d5126f682ba84532bf6729bfd884a705#5fbec5f80a4f4af0ade652cd7065a5d9)
+
 ## 1. Solicitud de parejas de datos.
 
 De manera general, si se realiza la solicitud de una consulta que obtenga las parejas de datos, de manera normal,
@@ -144,3 +146,82 @@ WHERE dni IN (SELECT dni
 
 En SQL existe un operador que nos permite ordenador por años fechas que se encuentran en formato estándar dentro
 de las distintas tablas de la base de datos. Por tanto, este operador es útil cuando se hace uso de fechas.
+
+## 13. Determinar la fecha actual, para que pueda ser comparada con el atributo de fecha en una tabla de SQL
+
+En ocasiones queremos hacer uso de la fecha actual, para poder realizar una consulta en SQL, por tanto, para 
+poder obtener la fecha de hoy en SQL, se hace uso de `SYSDATE`, que es la fecha del sistema, es decir, la fecha
+actual que queremos hacer uso.
+
+## 14. Uso de las funciones de grupo de manera `MAX(COUNT(*))` en SQL.
+
+El uso de esta manera de las funciones de grupo, en SQL no es posible, ni se debe de hacer, ya que, para
+poder realizar este tipo de operaciones, es mejor, y se debe de hacer uso de una subconsulta que calcule el contador
+y el máximo sea calculado en la consulta superior.
+
+## 15. Creación de vistas en SQL.
+
+Para la creación de vistas dentro de SQL se hace uso de la sentencia:
+```sql
+-- Siempre se hace uso de la misma estructura de esta forma.
+CREATE VIEW EJEMPLO
+AS (SELECT *
+    FROM PERSONA);
+```
+
+## 16. Inserción de valores dentro de una tabla de la base de datos como resultado de otra consulta.
+
+Para poder insertar valores dentro de una tabla de una base de datos se hace uso de la siguiente sintaxis:
+```sql
+INSERT INTO EJEMPLO_TABLA
+VALUES ();
+```
+
+En ocasiones, si se quieren introducir valores que resultan de otra consulta que se implementa en SQL se puede,
+pero se hace uso del siguiente ejemplo para poder entender:
+```sql
+INSERT INTO LISTAS
+VALUES (SELECT 'L1', CC, 'U1'
+        FROM LISTAS NATURAL JOIN CANCIONES
+        WHERE I='l1');
+```
+
+## 17. Eliminación de valores dentro de una tabla de la base de datos.
+
+Para poder eliminar valores de las tablas de una base de datos, se hace uso de la sentencia de manera:
+```sql
+DELETE FROM NOMBRE_TABLA
+[WHERE CONDITION]
+```
+
+Un ejemplo para poder entender esto anterior es:
+```sql
+DELETE FROM ME_GUSTA
+WHERE (U='U1') AND (CC='C1');
+```
+
+## 18. Limitación del tamaño de la tabla de una base de datos o edición de las condiciones de una tabla de una base de datos.
+
+Para poder editar las condiciones que fueron establecidas para una base de datos se hace uso de:
+```sql
+ALTER TABLE NOMBRE_TABLA
+ADD CONSTRAINT CONDITION
+```
+
+Un ejemplo de esto anterior que nos permite entender el funcionamiento de esto es:
+```sql
+-- Limita el tamaño de las Listas a un máximo de 25 canciones.
+ALTER TABLE LISTAS
+ADD CONSTRAINT LIMITE_25_CANCIONES CHECK 25 >= ALL (SELECT COUNT(DISTINCT CC) 
+																										FROM LISTAS
+																										GROUP BY CL);
+```
+
+Otro ejemplo de modificación de las tablas de una base de datos es en cuanto al tiempo, por ejemplo:
+```sql
+-- Impide que la duración total de cualquier lista sea superior a 3 horas.
+ALTER TABLE
+ADD CONSTRAINT LIMITE_3_HORAS CHECK 3600 * 3 >= ALL (SELECT SUM(D)
+                                                     FROM LISTAS NATURAL JOIN CANCIONES
+                                                     GROUP BY CL);   
+```
