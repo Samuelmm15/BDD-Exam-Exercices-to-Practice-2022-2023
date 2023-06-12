@@ -52,3 +52,23 @@ A = p(DNI, T)(s(IC = 'l1')(PARTICIPANTES)) -- Todos los participantes de la carr
 B = p(DNI, T)(s((IC = 'l1') ^ (PARTICIPANTES.T > A.T))(PARTICIPANTES x A)) -- Obtenemos todos los participantes con el mayor tiempo
     p(DNI)(A - B) --Obtenemos el único que tiene menor tiempo que todos
 ```
+
+4. Personas que han corrido al menos una vez en cada ciudad en la que organizan carreras.\
+Se necesitan las tablas: PARTICIPANTES, CARRERAS \
+Significado: Personas que han corrido en todas las ciudades en las que existen carreras.
+```sql
+A = p(CDC)(CARRERAS)
+B = p(DNI, CDC)(CARRERAS * PARTICIPANTES)
+    p(DNI)(B/A)
+```
+
+5. Personas que han corrido en alguna ciudad todas las carreras que se han organizado en ella.\
+Se necesitan las tablas: PARTICIPANTES, CARRERAS \
+Significado: Personas que corren todas las carreras que se organizan dentro de una ciudad.
+```sql
+A = P(DNI, CDC)(PARTICIPANTES ∗ CARRERAS) -- Participantes que han hecho alguna carrera en la ciudad
+    C = P(DNI)(PARTICIPANTES) × P(IC, CDC)(CARRERAS) -- 
+        D = P(DNI, IC, CDC)(PARTIPANTES ∗ CARRERAS)  -- Participantes que han hecho carreras en la ciudad
+            B = P(DNI, CDC)(C − D) 
+                P(DNI)(A − B)
+```
