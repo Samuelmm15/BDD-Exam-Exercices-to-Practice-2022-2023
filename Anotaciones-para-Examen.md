@@ -225,3 +225,29 @@ ADD CONSTRAINT LIMITE_3_HORAS CHECK 3600 * 3 >= ALL (SELECT SUM(D)
                                                      FROM LISTAS NATURAL JOIN CANCIONES
                                                      GROUP BY CL);   
 ```
+
+## 19. Eliminación de la clave primaria de una tabla especifica en SQL.
+
+Para poder eliminar la clave primaria de una tabla que ha sido especificada en cocreto se hace uso del siguiente
+código en general:
+```sql
+ALTER TABLE NOMBRE_TABLA
+DROP PRIMARY KEY;
+```
+
+## 20. Cuidado con el uso de paréntesis cuando se hace uso de `CHECK` al modificar tablas en SQL.
+
+Se pueden usar subconsultas dentro de un CHECK en SQl, pero se ha de tener cuidado con el uso de paréntesis, 
+ya que si no se ponen los paréntesis del check la subconsulta no funciona y se puede producir un error grave. Un
+ejemplo para poder entender el funcionamiento de esto es:
+
+```sql
+-- Impide que una tienda pueda vender de un mismo producto más de 100 unidades en un mismo día.
+ALTER TABLE VENTAS
+ADD CONSTRAINT LIMITE_UNIDADES CHECK (NOT EXISTS(SELECT *
+                                                FROM VENTAS V1
+                                                WHERE NOT EXISTS(SELECT *
+                                                                 FROM VENTAS V2
+                                                                 WHERE V1.CT = V2.CT AND V1.CA = V2.CT AND NU > 100
+                                                                 GROUP BY F)));
+```
