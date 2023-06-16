@@ -251,3 +251,9 @@ ADD CONSTRAINT LIMITE_UNIDADES CHECK (NOT EXISTS(SELECT *
                                                                  WHERE V1.CT = V2.CT AND V1.CA = V2.CT AND NU > 100
                                                                  GROUP BY F)));
 ```
+
+## 21. Determinación de la fecha actual del día en el cual se quiere realizar una consulta en SQL.
+
+Para el empleo de la fecha del día de hoy, es decir, cuando en una consulta SQL nos piden que se compruebe
+algún valor teniendo en cuenta la fecha del día actual en el cual se encuentra o se realiza la consulta, 
+se hace uso del parámetro o el operador `SYSDATE`.
