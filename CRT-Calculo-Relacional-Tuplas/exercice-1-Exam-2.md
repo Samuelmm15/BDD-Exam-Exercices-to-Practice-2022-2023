@@ -43,5 +43,20 @@ Para (dom(p1) = PERSONAS), (dom(p2) = PERSONAS), (dom(c1) = CARRERAS), (dom(c2) 
 Se necesitan las tablas: PARTICIPANTES
 ```sql
 Para (dom(p1) = PARTICIPANTES), (dom(p2) = PARTICIPANTES)
-{t1 | ∃p1 ∀p2((p1.DNI = t) ^ (p1.IC ^ p2.IC) ^ (p1.T >= p2.T))}
+{t1 | ∃p1 ∀p2((p1.DNI = t) ^ (p1.IC ^ p2.IC) ^ (p1.T <= p2.T))}
+```
+
+4) Personas que han ganado todas las carreras en las que han participado.\
+Se necesitan las tablas: PARTICIPANTES
+```sql
+Para (dom(p1) = PARTICIPANTES), (dom(p2) = PARTICIPANTES), (dom(c) = CARRERAS)
+{t1 | ∃p1 ∀p2((p1.DNI = t) ^ ∀c ((c.IC = p1.IC) ^ (p2.IC = c.IC) ^ (p1.DNI ¬= p2.DNI) ^ (p1.T <= p2.T)))}
+```
+
+5) Personas que han ganado todas las carreras en las que han participado celebradas en una misma ciudad.\
+Se necesitan las tablas: PARTICIPANTES, CARRERAS
+```sql
+Para (dom(p1) = PARTICIPANTES), (dom(p2) = PARTICIPANTES), (dom(c1) = CARRERAS), (dom(c2) = CARRERAS)
+{t1 | ∃p1 ∀p2((p1.DNI = t) ^ ∀c1 ∀c2 ((c1.IC ¬= c2.IC ) v ((c1.IC = c2.IC) ^ (c.IC = p1.IC) ^ (p2.IC = c.IC) ^ 
+    (p1.DNI ¬= p2.DNI) ^ (p1.T <= p2.T) ^ (c1.CDC = c2.CDC))))}
 ```
