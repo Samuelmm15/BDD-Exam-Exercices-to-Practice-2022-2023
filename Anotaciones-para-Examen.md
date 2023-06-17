@@ -257,3 +257,21 @@ ADD CONSTRAINT LIMITE_UNIDADES CHECK (NOT EXISTS(SELECT *
 Para el empleo de la fecha del día de hoy, es decir, cuando en una consulta SQL nos piden que se compruebe
 algún valor teniendo en cuenta la fecha del día actual en el cual se encuentra o se realiza la consulta, 
 se hace uso del parámetro o el operador `SYSDATE`.
+
+## 22. Agrupamiento de elementos en SQL.
+
+Cuando realizamos el agrupamiento de elementos en SQL haciendo uso del operador `GROUP BY`, debemos de agrupar
+los elementos teniendo en cuenta la columna principal tomada como resultado en una consulta, ya que esto es importante,
+y si no se produce esto, se produciría un error en dicha consulta. Por tanto, para poder entender se tiene el siguiente
+ejemplo:
+
+```sql
+-- Personas que han comprado en una misma tienda más de 10 unidades de productos iguales o distintos.
+SELECT DNI
+FROM VENTAS V1
+GROUP BY DNI, CT
+HAVING (NU >= 10) OR ((TOTAL_PRODUCTS >= 10) AND TOTAL_PRODUCTS = (SELECT SUM(NU)
+                                                                   FROM VENTAS V2
+                                                                   GROUP BY CT
+                                                                   HAVING (V1.CT = V2.CT)));
+```
