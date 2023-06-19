@@ -275,3 +275,33 @@ HAVING (NU >= 10) OR ((TOTAL_PRODUCTS >= 10) AND TOTAL_PRODUCTS = (SELECT SUM(NU
                                                                    GROUP BY CT
                                                                    HAVING (V1.CT = V2.CT)));
 ```
+
+## 23. Uso de variables como resultado de una consulta en SQL.
+
+En SQL NO se puede hacer uso de una variable como resultado de una consulta en la misma consulta en la que se
+realiza, ya que, esto estaría mal, se puede declarar una variable que quiere ser comparada dentro del `WHERE` de
+una consulta, pero, la declaración de una variable en el SELECT de una consulta y después su declaración,
+esto si que no se puede realizar y estaría mal hecho.
+
+Un ejemplo de esto anterior para poder entender es:
+```sql
+SELECT AVG(NUMERO_TRIBUNALES) -- No se puede definir en este punto
+FROM PROFESOR P1
+WHERE (AR = 'LSI') AND (NUMERO_TRIBUNALES = (SELECT COUNT(*) -- Después dar valor en este otro
+                                             FROM TRIBUNAL T
+                                             WHERE (T.P = P1.DNI) OR (T.S = P1.DNI) OR (T.V = P1.DNI)
+                                             GROUP BY CUR));
+```
+
+Para corregir este error anterior, se puede solucionar de la siguiente manera:
+```sql
+SELECT AVG(numero_tribunales)
+FROM (
+    SELECT P1.DNI, (SELECT COUNT(*)
+                    FROM TRIBUNAL T
+                    WHERE (T.P = P1.DNI OR T.S = P1.DNI OR T.V = P1.DNI)
+                    GROUP BY T.CUR) AS numero_tribunales
+    FROM PROFESOR P1
+    WHERE P1.AR = 'LSI'
+) AS subquery;
+```
