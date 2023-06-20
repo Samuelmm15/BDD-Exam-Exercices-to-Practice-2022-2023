@@ -331,3 +331,32 @@ A = p(CC, I)(CANCIONES)
 B = p(CL, U, CC, I)(CANCIONES * LISTAS)
     p(U)(B / A)
 ```
+
+## 25. Actualización de alguno de los valores de los atributos de una tabla en SQL, mediante el operador `UPDATE`.
+
+De manera general para poder actualizar alguno de los valores o cambiarlo, se hace uso del operador de SQL
+`UPDATE`, este, de manera general es de la forma:
+```sql
+UPDATE NOMBRE_TABLA
+SET VALOR_A_ACTUALIZAR
+[WHERE CONDICION]
+```
+
+Teniendo en cuenta esto anterior, se puede observar el siguiente ejemplo para poder entender esto anterior:
+```sql
+-- Incrementa en un 10% el precio de todos los articulos de la tienda T1 que pertenecen a la categoria C1.
+UPDATE TIENDAS
+SET PR = (PR + (0.10 * PR))
+WHERE (CT = 'C1') AND (CT = 'T1');
+```
+
+## 26. Creación de una nueva tabla de la base de datos como resultado de una subconsulta en SQL.
+
+Para la creación de una nueva tabla que resulta de una subconsulta con una serie de características, se puede
+observar el siguiente ejemplo para ello:
+```sql
+-- Crea una tabla que almacene todas las ventas anteriores al 1 de enero de 2020 de la base de datos.
+CREATE TABLE VENTAS_1_ENERO AS (SELECT *
+       FROM VENTAS
+       WHERE (F <= '01-JAN-2020'));
+```
