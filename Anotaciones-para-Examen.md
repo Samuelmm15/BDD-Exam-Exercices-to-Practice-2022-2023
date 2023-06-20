@@ -305,3 +305,29 @@ FROM (
     WHERE P1.AR = 'LSI'
 ) AS subquery;
 ```
+
+## 24. Cuidado con el operador `Cociente` del álgebra relacional.
+
+Cuando se hace uso del operador cociente del álgebra relacional, hay que tener cuidado con este, ya que, si en ocasiones
+tenemos que agrupar todas las tuplas teniendo en cuenta distintos grupos que vienen marcados por una Clave primaria
+que permite identificar cada grupo de tuplas de manera independiente y única. Por tanto, para poder entender el 
+funcionamiento de dicho operador y su potencia, es necesario observar el siguiente ejemplo:
+```sql
+A = p(CC, I)(CANCIONES)
+B = p(U, CC, I)(CANCIONES * LISTAS)
+    p(U)(B / A)
+```
+
+En el caso anterior, se produce que al no tener identificada la vista B de manera única haciendo uso de la clave
+primaria CL (código de la lista), para cada uno de los grupos que se van a formar en la vista B, se produce,
+que puede ocurrir que personas que tienen canciones del mismo intérprete en otras listas, se produce que han sido
+añadidas en otras listas por el mismo usuario, pero, al ser listas distintas y tener todas las canciones de dicho
+intérprete en listas distintas, se puede reconocer como que todas las canciones de un mismo artista han sido introducidas
+en las distintas listas de dicho usuario, pero, lo que queremos nosotros es que estén todas en una misma lista, por
+tanto, cada una de las tuplas de la vista B deben de estar identificadas de manera única, haciendo uso de la clave
+primaria `CL`. Es por ello que la consulta, anterior de manera corregida y correcta es:
+```sql
+A = p(CC, I)(CANCIONES)
+B = p(CL, U, CC, I)(CANCIONES * LISTAS)
+    p(U)(B / A)
+```

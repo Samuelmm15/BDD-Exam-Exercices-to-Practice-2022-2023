@@ -48,8 +48,6 @@ p(U)((p(U, CC)(s((CL = 'L1'))(LISTAS * ME_GUSTA))) / (p(CC)(s((I = 'l1'))(CANCIO
 Se necesitan las tablas: LISTAS, CANCIONES
 ```sql
 A = p(CC, I)(CANCIONES)
-B = p(U, CC, I)(CANCIONES * LISTAS)
+B = p(CL, U, CC, I)(CANCIONES * LISTAS)
     p(U)(B / A)
 ```
-
-6. 
