@@ -42,8 +42,8 @@ Para (dom(c1) = CANCIONES), (dom(c2) = CANCIONES)
 4) Usuarios que han marcado con 'me gusta' todas las canciones de alguna lista.\
 Se necesitan las tablas: LISTAS, ME_GUSTA
 ```sql
-Para (dom(l) = LISTA), (dom(m) = ME_GUSTA), (dom(m1) = ME_GUSTA)
-{t1 | ∃l, l1((l.U = t) ^ ∀m((m.U = l.U) ^ (l1.U = l.U) ^ (l1.CL = l.CL) ^ (l.CC = m.CC)))}
+Para (dom(l) = LISTA), (dom(m) = ME_GUSTA)
+{t1 | ∃l((l.U = t) ^ ∀m((m.U = l.U) ^ (l.CC = m.CC)))}
 ```
 
 5) Usuarios que el mismo día han marcado con `me gusta`, al menos una canción de cada intérprete.
