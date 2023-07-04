@@ -13,8 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d48cd12-6d4f-4dce-b8ac-00a034ad379b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam.md" beforeDir="false" afterPath="$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL/exercice-1-Exam-Tribunal.md" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/exercice-1-Exam-Tribunal.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Anotaciones-para-Examen.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +79,7 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
+    "ignore_missing_gitignore": "true",
     "last_opened_file_path": "/Users/smartin/Documents/BDD-Exam",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -118,6 +119,8 @@
       <workItem from="1687102602566" duration="10703000" />
       <workItem from="1687188384086" duration="10350000" />
       <workItem from="1687250936573" duration="3184000" />
+      <workItem from="1688488584772" duration="142000" />
+      <workItem from="1688488778210" duration="3863000" />
     </task>
     <servers />
   </component>
