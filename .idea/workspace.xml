@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2d48cd12-6d4f-4dce-b8ac-00a034ad379b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam.md" beforeDir="false" afterPath="$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/exercice-1-Exam-Tribunal.md" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/exercice-1-Exam-Tribunal.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam-2.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam-4.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam-Maquina.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam-Ventas.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-1-Exam.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-2-Exam-3.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-3-theme-1.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-4-theme-1.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-5-theme-1-book.md" root0="SKIP_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-6-theme-1-book.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Algebra-Relacional/exercice-algebra-relacional-pdf-internet.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRD-Calculo-Relacional-Dominios/exercice-1-Exam-Race.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRD-Calculo-Relacional-Dominios/exercice-1-theme-2.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRD-Calculo-Relacional-Dominios/exercice-2-Exam-Maquina.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRD-Calculo-Relacional-Dominios/exercice-4-theme-2.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRT-Calculo-Relacional-Tuplas/exercice-1-Exam-2.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRT-Calculo-Relacional-Tuplas/exercice-2-Exam-CANCIONES.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRT-Calculo-Relacional-Tuplas/exercice-4-theme-2.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRT-Calculo-Relacional-Tuplas/exercice-5-theme-2-book.md" root0="SKIP_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CRT-Calculo-Relacional-Tuplas/exercice-6-theme-2-book.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-1-Exam-Airport.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-1-Exam-Race.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-1-Exam-Tribunal.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-1-Exam.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-1-theme-3-book.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-1-theme-3.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-2-Exam.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-2-SQL-Exam-VENTAS.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SQL/exercice-2-SQL-Hoja-Problemas.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="02qpdwgb" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QbK7JtbpjXpJgF1un3g73i1L3l" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/smartin/Documents/BDD-Exam",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2d48cd12-6d4f-4dce-b8ac-00a034ad379b" name="Changes" comment="" />
+      <created>1685616671727</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685616671727</updated>
+      <workItem from="1685616673202" duration="141000" />
+      <workItem from="1685616858963" duration="129000" />
+      <workItem from="1685617004694" duration="5280000" />
+      <workItem from="1685623416546" duration="1222000" />
+      <workItem from="1685727136998" duration="5746000" />
+      <workItem from="1685807731272" duration="9042000" />
+      <workItem from="1685819053213" duration="6000" />
+      <workItem from="1685897391683" duration="7853000" />
+      <workItem from="1685979123976" duration="9485000" />
+      <workItem from="1686153197113" duration="11373000" />
+      <workItem from="1686239888843" duration="8671000" />
+      <workItem from="1686324508826" duration="10201000" />
+      <workItem from="1686416950569" duration="5938000" />
+      <workItem from="1686495017058" duration="50000" />
+      <workItem from="1686495079185" duration="12264000" />
+      <workItem from="1686585628651" duration="9667000" />
+      <workItem from="1686846293183" duration="8574000" />
+      <workItem from="1687016771621" duration="8832000" />
+      <workItem from="1687102602566" duration="10703000" />
+      <workItem from="1687188384086" duration="10350000" />
+      <workItem from="1687250936573" duration="3184000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
