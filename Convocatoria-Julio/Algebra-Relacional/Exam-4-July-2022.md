@@ -59,3 +59,14 @@ C = p(DNI)(s((A.E < B.E))(A x B))
     p(DNI)(CONTAGIOS) - C
 ```
 
+4. Personas que han recibido al menos una dosis de cada tipo de vacuna.\
+Se necesitan las tablas: VACUNAS
+```sql
+p(DNI)(p(DNI, V)(VACUNAS) / p(V)(VACUNAS))
+```
+
+5. Personas que han recibido alguna dosis de vacunas en cada uno de los centros médicos del mismo municipio.\
+Se necesitan las tablas: VACUNAS
+```sql
+p(DNI)(p(DNI, V, C, MC)(VACUNAS) / p(C, MC)(VACUNAS))
+```
