@@ -199,3 +199,25 @@ A = p(CC, I)(CANCIONES)
 B = p(CL, U, CC, I)(CANCIONES * LISTAS)
     p(U)(B / A)
 ```
+
+14. Cuidado con el uso de la propiedad del para todo en el cálculo relacional de tuplas CRT.
+
+Hay que tener en cuenta que hay que tener cuidado con el uso de la técnica del para todo en el cálculo de tuplas, ya
+que, por lo que he podido observar sólo se hace uso en aquellos casos en los que se quiera comparar un atributo de
+una primera vista de una tabla con el de una segunda vista de la misma tabla o de otra que se encuentre dentro
+de un cuatificador universal. Por ejemplo, para poder entender esto, se tiene el siguiente ejemplo:
+
+`EJEMPLO:`
+
+5. Centro médico dónde se hayan administrado todos los tipos de vacunas en una misma fecha.\
+   Se necesitan las tablas: VACUNAS
+```sql
+Para dom(V1) = VACUNAS, dom(V2) = VACUNAS, dom(V3) = VACUNAS
+{t1 | ∃(V1)((V1[C] = t) ^ ∀(V2)(∃(V3)((V1[C] = V2[C]) ^ (V1[C] = V3[C]) ^ (V2[V] = V3[V]) ^ (V2[F] = V3[F]))))}
+```
+
+La consulta anterior es `aproximadamente correcta`, pero, esta es la corrección:
+```sql
+Para dom(V1) = VACUNAS, dom(V2) = VACUNAS, dom(V3) = VACUNAS
+{t1 | ∃(V1)((V1[C] = t) ^ ∀(V2)((V1[F] ¬= V2[F]) v ∃(V3)((V1[C] = V2[C]) ^ (V1[C] = V3[C]) ^ (V2[V] = V3[V]) ^ (V1[F] = V3[F]))))}
+```
