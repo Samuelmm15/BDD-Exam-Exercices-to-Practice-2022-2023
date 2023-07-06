@@ -1,4 +1,4 @@
-# 2 Septembre Exam Agencia de Vehículos de Alquiler
+# 2 September Exam Agencia de Vehículos de Alquiler
 
 Relacion de las distintas tablas usadas en la base de datos:
 
@@ -14,7 +14,8 @@ SIGNIFICADO: El cliente con dni DNI, ha alquilado en la oficina CO el vehículo 
 días.
 CP: (M, F) CA: (M, CO)
 
-Realizar la implementación de las siguientes consultas haciendo uso de álgebra relacional ():
+Realizar la implementación de las siguientes consultas haciendo uso de álgebra relacional (`soluciones en la página
+19`):
 
 1. Vehículos que están disponibles simultáneamente en al menos 2 oficinas.\
 Se necesitan las tablas: DISPONIBILIDAD
