@@ -14,7 +14,8 @@ SIGNIFICADO: El cliente con dni DNI, ha alquilado en la oficina CO el vehículo 
 días.
 CP: (M, F) CA: (M, CO)
 
-Realizar la implementación de las siguientes consultas haciendo uso de SQL ():
+Realizar la implementación de las siguientes consultas haciendo uso de SQL (`soluciones en la página
+14`):
 
 1. Número de vehículos de la categoría C1 disponibles en la oficina O1.\
 Se necesitan las tablas: DISPONIBILIDAD, COCHES
@@ -30,6 +31,15 @@ Se necesitan las tablas: DISPONIBILIDAD, ALQUILERES
 SELECT AVG(PR)
 FROM DISPONIBILIDAD NATURAL JOIN ALQUILERES
 WHERE (CO = 'O1');
+```
+
+La consulta anterior es `casi correcta`, pero, no sabía que se podía usar dos operadores dentro de la misma operación
+, por tanto, la consulta anterior de manera corregida es:
+```sql
+SELECT AVG(SUM(PR))
+FROM DISPONIBILIDAD NATURAL JOIN ALQUILERES
+WHERE (CO = 'O1');
+GROUP BY DNI;
 ```
 
 3. Clientes que siempre alquilan vehículos de la categoría C1.\
