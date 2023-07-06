@@ -1,6 +1,6 @@
 # 2 September Exam Agencia de Vehículos de Alquiler
 
-Relacion de las distintas tablas usadas en la base de datos:
+Relación de las distintas tablas usadas en la base de datos:
 
 COCHES(M, CAT)
 SIGNIFICADO: El vehículo con matrícula M es de la categoría CAT.
