@@ -200,7 +200,7 @@ B = p(CL, U, CC, I)(CANCIONES * LISTAS)
     p(U)(B / A)
 ```
 
-14. Cuidado con el uso de la propiedad del para todo en el cálculo relacional de tuplas CRT.
+## 14. Cuidado con el uso de la propiedad del para todo en el cálculo relacional de tuplas CRT.
 
 Hay que tener en cuenta que hay que tener cuidado con el uso de la técnica del para todo en el cálculo de tuplas, ya
 que, por lo que he podido observar sólo se hace uso en aquellos casos en los que se quiera comparar un atributo de
@@ -220,4 +220,69 @@ La consulta anterior es `aproximadamente correcta`, pero, esta es la corrección
 ```sql
 Para dom(V1) = VACUNAS, dom(V2) = VACUNAS, dom(V3) = VACUNAS
 {t1 | ∃(V1)((V1[C] = t) ^ ∀(V2)((V1[F] ¬= V2[F]) v ∃(V3)((V1[C] = V2[C]) ^ (V1[C] = V3[C]) ^ (V2[V] = V3[V]) ^ (V1[F] = V3[F]))))}
+```
+
+## 15. Como obtener el mayor elemento de un contador en SQL.
+
+Una de las formas que nos permite obtener el mayor elemento tras contar una serie de tuplas o valores de una consulta
+en SQL, se debe de seguir la filosofía de que, debemos de contar todos los elementos, crear este contador como una
+vista. Haciendo uso de dicha vista lo ordenamos en el orden que queramos, es decir, de manera descendente si queremos
+obtener el mayor valor y de orden ascendente si queremos obtener el mayor, y, finalmente establecemos que lo limite a 
+1 tupla lo que debemos de obtener, por tanto, sólo, nos obteniene la primera tupla obtenida tras la ordenación. Un 
+ejemplo que nos permite entender esto, es el siguiente:
+
+```sql
+-- Centro médico dónde se ha administrado la mayor cantidad de dosis de vacunas.
+SELECT C, COUNT(*) AS CANTIDAD_DOSIS
+FROM VACUNAS
+GROUP BY C
+ORDER BY CANTIDAD_DOSIS DESC 
+LIMIT 1;
+```
+
+## 16. Como realizar las operaciones cuando nos dicen que un tanto por ciento supera un cierto elemento en SQL.
+
+Para poder implementar este tipo de consultas de manera común se realizará la implementación de las consultas de la
+siguiente manera teniendo en cuenta el ejemplo:
+```sql
+-- Centro médico donde al menos el 30% de las personas vacunadas han sido hombres.
+SELECT C
+FROM VACUNAS NATURAL JOIN PERSONAS
+WHERE S = 'M'
+GROUP BY C
+HAVING COUNT(DISTINCT DNI) >= 0.3 * (SELECT COUNT(DISTINCT DNI)
+                                     FROM VACUNAS);
+```
+
+## 17. Modificación de una tabla con una nueva variable que posee unos ciertos datos en concreto.
+
+Para poder entender esto se hace uso del siguiente ejemplo que muestra cómo se debe de realizar esta determinada
+operación:
+```sql
+-- Modifica la tabla CONTAGIOS para añadir un nuevo atributo G que indique la gravedad (BAJA, MEDIA, ALTA).
+ALTER TABLE CONTAGIOS ADD(
+  G VARCHAR(5) NOT NULL  
+);
+
+ALTER TABLE CONTAGIOS
+   ADD CONSTRAINT NAMES CHECK ( G IN ('BAJA', 'MEDIA', 'ALTA') );
+```
+
+## 18. Fórmula útil para la implementación de las últimas consultas de álgebra relacional.
+
+En ocasiones en álgebra relacional, cuando nos dicen o nos indican que por ejemplo que en `algún` algo se tengan
+todos los elementos de `algún` otro algo, se suele hacer uso de la siguiente fórmula adjunta a continuación:
+
+![img.png](img.png)
+
+Para poder entender el funcionamiento de la fórmula anterior se tiene el siguiente ejemplo que nos permite entender
+esto:
+```sql
+-- Clientes que han alquilado en alguna oficina todos los vehículos de alguna categoría.
+p(DNI)(p(DNI, CAT)(ALQUILERES * COCHES) - p(DNI, CAT)(p(DNI)(ALQUILERES) x p(DNI, M, CAT)(ALQUILERES * COCHES) - p(DNI, M, CAT)(ALQUILERES * COCHES)))
+    
+-- Dónde se tiene que:
+    -- R = DNI
+    -- A = CAT
+    -- T = M
 ```
