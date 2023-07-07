@@ -1,6 +1,6 @@
 # Anotaciones para examen
 
-`NOTA:` Enlace de otros apuntes que pueden ser útiles: [NOTION-NOTES](https://fantasy-dance-bb2.notion.site/Ejercicios-de-repaso-EXAMEN-d5126f682ba84532bf6729bfd884a705#5fbec5f80a4f4af0ade652cd7065a5d9)
+`NOTA:` Enlace de otros apuntes que pueden ser útiles: [NOTION-NOTES](https://fantasy-dance-bb2.notion.site/Ejercicios-de-repaso-EXAMEN-d5126f682ba84532bf6729bfd884a705#5fbec5f80a4f4af0ade652cd7065a5d9)\
 También se pueden tener en cuenta y observar otros apuntes que se encuentran dentro del directorio: [Directorio-Apuntes](./Apuntes-BDD-Completos)
 
 ## 1. Modo de funcionamiento de las consultas solicitadas por Santiso.
