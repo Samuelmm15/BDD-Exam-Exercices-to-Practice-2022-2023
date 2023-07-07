@@ -16,7 +16,7 @@ SIGNIFICADO: La persona con n i DNI. ha comprado en la tienda CT, NU unidades de
 CLAVE PRIMARIA: (DNI, CT, CA, F)\
 CLAVE AJENA: (CT, CA)
 
-Realizar la implementación de las distintas consultas haciendo uso de SQL (`soluciones en la página 18
+Realizar la implementación de las distintas consultas haciendo uso de SQL (`soluciones apuntes de Pablo
 `):
 
 1. Número de productos de la tienda T1 con un precio inferior a 30€.\
