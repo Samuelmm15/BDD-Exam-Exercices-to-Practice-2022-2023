@@ -14,7 +14,8 @@ REGISTRO (A, PI, F, II, OP, T' )\
 SIGNIFICADO: En la pista PI del aeropuerto A, el día F a la hora H se realizó una operación OP para un avión de tipo T.\
 CP: (A, PI, P, H) CA: (A, PI)
 
-Realizar la implementación de las distintas consultas haciendo uso de Álgebra relacional:
+Realizar la implementación de las distintas consultas haciendo uso de Álgebra relacional (`soluciones apuntes
+de Pablo Notion`):
 
 1. Aeropuertos en los que algún día aterriza al menos un avión de carga en alguna de sus pistas.\
 Se necesitan las tablas: REGISTRO
